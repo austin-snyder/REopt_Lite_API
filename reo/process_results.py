@@ -108,7 +108,7 @@ def process_results(self, dfm_list, data, meta, saveToDB=True):
             "gen_year_one_variable_om_costs",
         ]
 
-        def __init__(self, results_dict, results_dict_bau, dm, inputs):
+        def __init__(self, results_dict, results_dict_bau, dfm, inputs=[]):
             """
             Convenience (and legacy) class for handling REopt results
             :param results_dict: flat dict of results from reopt.jl
@@ -135,6 +135,7 @@ def process_results(self, dfm_list, data, meta, saveToDB=True):
                     results_dict[k + '_bau'] = results_dict_bau[k]
 
             for i in range(len(self.inputs["PV"])):
+                # b/c of PV & PVNM techs in REopt, if both are zero then no value is written to REopt_results.json
                 if results_dict.get('PV' + str(i+1) + '_kw') is None:
                     results_dict['PV' + str(i+1) + '_kw'] = 0
                 pv_bau_keys = ["PV" + str(i+1) + "_net_fixed_om_costs",
@@ -159,7 +160,6 @@ def process_results(self, dfm_list, data, meta, saveToDB=True):
             self.nested_outputs = self.setup_nested()
 
         @property
-
         def replacement_costs(self):
             replacement_costs = 0
             replacement_costs += self.inputs["Storage"]["replace_cost_us_dollars_per_kw"] * \
@@ -209,7 +209,6 @@ def process_results(self, dfm_list, data, meta, saveToDB=True):
 
             storage_future_cost = self.inputs["Storage"]["replace_cost_us_dollars_per_kwh"] * \
                                   self.nested_outputs["Scenario"]["Site"]["Storage"]["size_kwh"]
-
             # NOTE these upfront costs include the tax benefit available to commercial entities
             upfront_capex_after_incentives -= inverter_future_cost * pwf_inverter * \
                                               (1 - self.inputs["Financial"]["offtaker_tax_pct"])

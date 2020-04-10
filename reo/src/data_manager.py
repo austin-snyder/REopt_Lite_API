@@ -632,6 +632,15 @@ class DataManager:
                     # However, if storage is being modeled it can override grid-charging
                     if tech == 'util' and load == 'storage' and self.storage is not None:
                         tech_to_load[-1] = int(self.storage.canGridCharge)
+                
+                for location in ['roof', 'ground', 'both']:
+                    if tech.startswith('pv'):
+                        if eval('self.' + tech + '.location') == location:
+                            tech_to_location.append(1)
+                        else:
+                            tech_to_location.append(0)
+                    else:
+                        tech_to_location.append(0)
 
                 for location in ['roof', 'ground', 'both']:
                     if tech.startswith('pv'):
@@ -735,10 +744,9 @@ class DataManager:
                     min_turn_down.append(0.0)
 
                 beyond_existing_cap_kw = eval('self.' + tech + '.max_kw')
-
                 if tech.startswith('pv'):  # has acres_per_kw and kw_per_square_foot attributes, as well as location
                     if eval('self.' + tech + '.location') == 'both':
-                        both_existing_pv_kw += existing_kw
+                        both_existing_pv_kw += existing_kw                        
                         if self.site.roof_squarefeet is not None and self.site.land_acres is not None:
                             # don't restrict unless they specify both land_area and roof_area,
                             # otherwise one of them is "unlimited" in UI
@@ -769,7 +777,6 @@ class DataManager:
                                 roof_max_kw = self.site.roof_squarefeet * eval('self.' + tech + '.kw_per_square_foot')
                                 land_max_kw = self.site.land_acres / eval('self.' + tech + '.acres_per_kw')
                                 beyond_existing_cap_kw = min(roof_max_kw + land_max_kw, beyond_existing_cap_kw)
-
                 if tech.startswith('wind'):  # has acres_per_kw attribute
                     if self.site.land_acres is not None:
                         site_constraint_kw = self.site.land_acres / eval('self.' + tech + '.acres_per_kw')
