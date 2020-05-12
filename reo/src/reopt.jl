@@ -6,7 +6,7 @@ include("utils.jl")
 
 function reopt(reo_model, data, model_inputs)
 
-    profile_dict = Dict{String, Float64}
+    profile_dict = Dict{String, Float64}()
     profile_dict["start"] = time()
 
     p = build_param(
@@ -81,9 +81,9 @@ function reopt(reo_model, data, model_inputs)
         OMcostPerUnitProd = model_inputs["OMcostPerUnitProd"]
     )
 
-    profile_dict["param_building_time"] = (time() - start)
+    profile_dict["param_building_time"] = (time() - profile_dict["start"])
     MAXTIME = data["inputs"]["Scenario"]["timeout_seconds"]
-    results = reopt_run(reo_model, MAXTIME, p)
+    results = reopt_run(reo_model, MAXTIME, profile_dict, p)
 
     return results
 end
@@ -93,7 +93,7 @@ function reopt_run(reo_model, MAXTIME::Int64, profile_dict::Dict{String, Float64
 	REopt = reo_model
     Obj = 2  # 1 for minimize LCC, 2 for min LCC AND high mean SOC
 
-    @variables REopt begi::
+    @variables REopt begin
         binNMLorIL[p.NMILRegime], Bin
         binSegChosen[p.Tech, p.Seg], Bin
         dvSystemSize[p.Tech, p.Seg] >= 0
