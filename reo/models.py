@@ -64,7 +64,15 @@ class ProfileModel(models.Model):
     pre_setup_scenario_seconds = models.FloatField(null=True, blank=True)
     setup_scenario_seconds = models.FloatField(null=True, blank=True)
     reopt_seconds = models.FloatField(null=True, blank=True)
+    build_param_seconds = models.FloatField(null=True, blank=True)
+    model_build_seconds = models.FloatField(null=True, blank=True)
+    optimization_seconds = models.FloatField(null=True, blank=True)
+    output_construction_seconds = models.FloatField(null=True, blank=True)
     reopt_bau_seconds = models.FloatField(null=True, blank=True)
+    build_param_bau_seconds = models.FloatField(null=True, blank=True)
+    model_build_bau_seconds = models.FloatField(null=True, blank=True)
+    optimization_bau_seconds = models.FloatField(null=True, blank=True)
+    output_construction_bau_seconds = models.FloatField(null=True, blank=True)
     parse_run_outputs_seconds = models.FloatField(null=True, blank=True)
 
     @classmethod
