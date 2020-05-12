@@ -69,9 +69,49 @@ nested_output_definitions = {
                   "description": "Time spent solving scenario",
                   "units": "seconds"
                 },
+                "build_param_seconds":{
+                  "type": float,
+                  "description": "Time spent building the paramter struct",
+                  "units": "seconds"
+                },
+                "model_build_seconds":{
+                  "type": float,
+                  "description": "Time spent building the model before optimizing",
+                  "units": "seconds"
+                },
+                "optimization_seconds":{
+                  "type": float,
+                  "description": "Time spent in the optimization algorithm",
+                  "units": "seconds"
+                },
+                "output_construction_seconds":{
+                  "type": float,
+                  "description": "Time spent querying solutions from the optimization algorithm",
+                  "units": "seconds"
+                },
                 "reopt_bau_seconds": {
                   "type": float,
                   "description": "Time spent solving base-case scenario",
+                  "units": "seconds"
+                },
+                "build_param_bau_seconds":{
+                  "type": float,
+                  "description": "Time spent building the paramter struct in the base-case",
+                  "units": "seconds"
+                },
+                "model_build_bau_seconds":{
+                  "type": float,
+                  "description": "Time spent building the model before optimizing in the base-case",
+                  "units": "seconds"
+                },
+                "optimization_bau_seconds":{
+                  "type": float,
+                  "description": "Time spent in the optimization algorithm in the base-case",
+                  "units": "seconds"
+                },
+                "output_construction_bau_seconds":{
+                  "type": float,
+                  "description": "Time spent querying solutions from the optimization algorithm in the base-case",
                   "units": "seconds"
                 },
                 "parse_run_outputs_seconds": {
@@ -79,6 +119,7 @@ nested_output_definitions = {
                   "description": "Time spent parsing outputs",
                   "units": "seconds"
                 }
+
             },
 
             "Site": {
