@@ -457,14 +457,14 @@ def process_results(self, dfm_list, data, meta, saveToDB=True):
             self.nested_outputs["Scenario"]["Profile"]["output_construction_seconds"] = self.results_dict.get(
                         "output_construction_seconds")
 
-            self.nested_outputs["Scenario"]["Profile"]["build_param_bau_seconds"] = self.results_dict_bau.get(
-                        "build_param_seconds")
-            self.nested_outputs["Scenario"]["Profile"]["model_build_bau_seconds"] = self.results_dict_bau.get(
-                        "model_build_seconds")
-            self.nested_outputs["Scenario"]["Profile"]["optimization_bau_seconds"] = self.results_dict_bau.get(
-                        "optimization_seconds")
-            self.nested_outputs["Scenario"]["Profile"]["output_construction_bau_seconds"] = self.results_dict_bau.get(
-                        "output_construction_seconds")
+            self.nested_outputs["Scenario"]["Profile"]["build_param_bau_seconds"] = self.results_dict.get(
+                        "build_param_seconds_bau")
+            self.nested_outputs["Scenario"]["Profile"]["model_build_bau_seconds"] = self.results_dict.get(
+                        "model_build_seconds_bau")
+            self.nested_outputs["Scenario"]["Profile"]["optimization_bau_seconds"] = self.results_dict.get(
+                        "optimization_seconds_bau")
+            self.nested_outputs["Scenario"]["Profile"]["output_construction_bau_seconds"] = self.results_dict.get(
+                        "output_construction_seconds_bau")
 
         def compute_total_power(self, tech):
             power_lists = list()
