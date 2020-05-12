@@ -7,7 +7,7 @@ include("utils.jl")
 function reopt(reo_model, data, model_inputs)
 
     profile_dict = Dict{String, Float64}()
-    profile_dict["start"] = time()
+    profile_dict["previous"] = time()
 
     p = build_param(
         Tech = model_inputs["Tech"],
@@ -81,7 +81,8 @@ function reopt(reo_model, data, model_inputs)
         OMcostPerUnitProd = model_inputs["OMcostPerUnitProd"]
     )
 
-    profile_dict["build_param_seconds"] = (time() - profile_dict["start"])
+    profile_dict["build_param_seconds"] = (time() - profile_dict["previous"])
+    profile_dict["previous"] = time()
     MAXTIME = data["inputs"]["Scenario"]["timeout_seconds"]
     results = reopt_run(reo_model, MAXTIME, profile_dict, p)
 
@@ -413,9 +414,11 @@ function reopt_run(reo_model, MAXTIME::Int64, profile_dict::Dict{String, Float64
 		@objective(REopt, Min, REcosts - dvMeanSOC)
 	end
 
-    profile_dict["model_build_seconds"] = (time() - profile_dict["build_param_seconds"])
+    profile_dict["model_build_seconds"] = (time() - profile_dict["previous"])
+    profile_dict["previous"] = time()
 	optimize!(REopt)
-    profile_dict["optimization_seconds"] = (time() - profile_dict["model_build_seconds"])
+    profile_dict["optimization_seconds"] = (time() - profile_dict["previous"])
+    profile_dict["previous"] = time()
 
     ##############################################################################
     #############  		Outputs    									 #############
@@ -616,11 +619,12 @@ function reopt_run(reo_model, MAXTIME::Int64, profile_dict::Dict{String, Float64
 
     results["status"] = status
 
-    profile_dict["output_construction_seconds"] = (time() - profile_dict["optimization_seconds"])
+    profile_dict["output_construction_seconds"] = (time() - profile_dict["previous"])
 
     for (k,v) in profile_dict
-        if k != "start"
+        if k != "previous"
             results[k] = v
+        end
     end
 
     return results
