@@ -106,7 +106,11 @@ def process_results(self, dfm_list, data, meta, saveToDB=True):
             "gen_total_fuel_cost",
             "gen_year_one_fuel_cost",
             "gen_year_one_variable_om_costs",
-        ]
+            "build_param_seconds",
+            "model_build_seconds",
+            "optimization_seconds",
+            "output_construction_seconds"
+]
 
         def __init__(self, results_dict, results_dict_bau, dm, inputs):
             """
