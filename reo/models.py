@@ -34,10 +34,10 @@ from django.forms.models import model_to_dict
 from picklefield.fields import PickledObjectField
 from reo.nested_inputs import nested_input_definitions
 import logging
-log = logging.getLogger(__name__)
 import sys
 import traceback as tb
 import warnings
+log = logging.getLogger(__name__)
 
 
 class URDBError(models.Model):
@@ -74,6 +74,10 @@ class ProfileModel(models.Model):
     optimization_bau_seconds = models.FloatField(null=True, blank=True)
     output_construction_bau_seconds = models.FloatField(null=True, blank=True)
     parse_run_outputs_seconds = models.FloatField(null=True, blank=True)
+    pyjulia_activate_include_seconds = models.FloatField(null=True, blank=True)
+    pyjulia_reopt_seconds = models.FloatField(null=True, blank=True)
+    pyjulia_bau_activate_include_seconds = models.FloatField(null=True, blank=True)
+    pyjulia_bau_reopt_seconds = models.FloatField(null=True, blank=True)
 
     @classmethod
     def create(cls, **kwargs):

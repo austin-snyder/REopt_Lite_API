@@ -118,6 +118,26 @@ nested_output_definitions = {
                   "type": float,
                   "description": "Time spent parsing outputs",
                   "units": "seconds"
+                },
+                "pyjulia_activate_include_seconds": {
+                  "type": float,
+                  "description": "Time spent activating Julia environment and including functions with PyJulia",
+                  "units": "seconds"
+                },
+                "pyjulia_reopt_seconds": {
+                  "type": float,
+                  "description": "Time spent running REopt model via PyJulia",
+                  "units": "seconds"
+                },
+                "pyjulia_bau_activate_include_seconds": {
+                  "type": float,
+                  "description": "Time spent activating BAU Julia environment and including functions with PyJulia",
+                  "units": "seconds"
+                },
+                "pyjulia_bau_reopt_seconds": {
+                  "type": float,
+                  "description": "Time spent running BAU REopt model via PyJulia",
+                  "units": "seconds"
                 }
 
             },
