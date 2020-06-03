@@ -746,7 +746,7 @@ class DataManager:
                 beyond_existing_cap_kw = eval('self.' + tech + '.max_kw')
                 if tech.startswith('pv'):  # has acres_per_kw and kw_per_square_foot attributes, as well as location
                     if eval('self.' + tech + '.location') == 'both':
-                        both_existing_pv_kw += existing_kw                        
+                        both_existing_pv_kw += existing_kw
                         if self.site.roof_squarefeet is not None and self.site.land_acres is not None:
                             # don't restrict unless they specify both land_area and roof_area,
                             # otherwise one of them is "unlimited" in UI

@@ -390,7 +390,7 @@ class ValidateNestedInput:
                 self.recursively_check_input_dict(self.nested_input_definitions, self.check_required_attributes)
                 self.recursively_check_input_dict(self.nested_input_definitions, self.check_special_cases)
                 self.recursively_check_input_dict(self.nested_input_definitions, self.add_number_to_listed_inputs)
-                
+
                 if type(self.input_dict['Scenario']['Site']['PV']) == dict:
                     self.input_dict['Scenario']['Site']['PV']['pv_number'] = 1
                     self.input_dict['Scenario']['Site']['PV'] = [self.input_dict['Scenario']['Site']['PV']]
@@ -405,7 +405,7 @@ class ValidateNestedInput:
         @property
         def messages(self):
             output = {}
-           
+
             if self.errors != {}:
                 output = self.errors
 
@@ -439,7 +439,7 @@ class ValidateNestedInput:
 
             if self.urdb_errors and self.input_data_errors:
                 output["input_errors"] += self.urdb_errors
-            
+
             elif self.urdb_errors:
                 output["error"] = "Invalid inputs. See 'input_errors'."
                 output["input_errors"] = self.urdb_errors
@@ -484,14 +484,14 @@ class ValidateNestedInput:
                   nested_template / nested_dictionary_to_check
             :return: None
             """
-            
+
             # Loop through all keys in the dictionary
             for name in nested_dictionary_to_check.keys():
                 # If the key is an object name (i.e. Scnenario, Wind) continue 
                 if self.isSingularKey(name):
                     # get the value of the key
                     real_input_value = nested_dictionary_to_check.get(name)
-                    
+
                     # assume the value is fine until we catch an error
                     continue_checking = True
 
@@ -599,7 +599,7 @@ class ValidateNestedInput:
                             self.recursively_check_input_dict(template[template_k], comparison_function,
                                                               real_values or {},
                                                               object_name_path=object_name_path + [template_k])
-                        
+
                         # if at the end of validation we are left with a list containing one dict, convert the entry fot the object back to 
                         # a dict from a list                                
                         if len(real_values_list) == 1:
@@ -617,11 +617,11 @@ class ValidateNestedInput:
             :param value: any, new value for the attribute
             """
             to_update = self.input_dict
-            
+
             for name in object_name_path:
                 name = name.split(' ')[0]
                 to_update = to_update[name]
-            
+
             if number == 1 and type(to_update) == dict:
                 to_update[attribute] = value
             else:
@@ -648,7 +648,7 @@ class ValidateNestedInput:
             else:
                 if attribute in to_update[number-1].keys():
                     del to_update[number-1][attribute]   
-        
+
         def object_name_string(self, object_name_path):
             return '>'.join(object_name_path)
 
@@ -734,7 +734,7 @@ class ValidateNestedInput:
             :param number: int, order of the dict in the list
             :param input_isDict: bool, indicates if the object input came in as a dict or list
             :return: None
-            """ 
+            """
             if real_values is not None:
                 rv = copy.deepcopy(real_values)
                 for name, value in rv.items():
@@ -1028,7 +1028,7 @@ class ValidateNestedInput:
                         except:
                             self.input_data_errors.append('Could not check min/max on %s (%s) in %s' % (
                             name, value, self.object_name_string(object_name_path)))
-                        else:                
+                        else:
                             if data_validators.get('min') is not None:
                                 if value < data_validators['min']:
                                     if input_isDict or input_isDict==None:
@@ -1212,7 +1212,7 @@ class ValidateNestedInput:
             all_missing_attribute_sets = []
             
             for key,value in template_values.items():
-                
+
                 if self.isAttribute(key):
 
                     missing_attribute_sets = []
@@ -1221,27 +1221,24 @@ class ValidateNestedInput:
 
                     if replacements is not None:
                         current_set = [key] + depends_on
-                        
+
                         if list(set(current_set)-set(real_values.keys())) != []:
                             for replace in replacements:
                                 missing = list(set(replace)-set(real_values.keys()))
-                                
+
                                 if missing == []:
                                     missing_attribute_sets = []
                                     break
-                                
                                 else:
                                     replace = sorted(replace)
                                     if replace not in missing_attribute_sets:
                                         missing_attribute_sets.append(replace)
-                        
                     else:
                         if real_values.get(key) is not None:
                             missing = []
                             for dependent_key in depends_on:
                                 if real_values.get(dependent_key) is None:
                                     missing.append(dependent_key)
-                            
                             if missing !=[]:
                                 missing_attribute_sets.append(missing)
 
@@ -1274,7 +1271,7 @@ class ValidateNestedInput:
                     self.input_data_errors.append('Missing Required for %s: %s' % (self.object_name_string(object_name_path), final_message))
                 if input_isDict is False:
                     self.input_data_errors.append('Missing Required for %s (number %s): %s' % (self.object_name_string(object_name_path), number,  final_message))
-        
+
         def validate_urdb_response(self, number=1):
             urdb_response = self.input_dict['Scenario']['Site']['ElectricTariff'].get('urdb_response')
 
