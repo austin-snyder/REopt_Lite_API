@@ -108,7 +108,7 @@ def process_results(self, dfm_list, data, meta, saveToDB=True):
             "gen_year_one_variable_om_costs",
         ]
 
-        def __init__(self, results_dict, results_dict_bau, dfm, inputs):
+        def __init__(self, results_dict, results_dict_bau, dm, inputs):
             """
             Convenience (and legacy) class for handling REopt results
             :param results_dict: flat dict of results from reopt.jl
